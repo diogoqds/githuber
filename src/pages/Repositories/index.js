@@ -14,9 +14,15 @@ class Repositories extends Component {
   state = {
     data: [],
     loading: true,
+    refreshing: false
   };
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.loadRepositories();
+  }
+
+  loadRepositories = async () => {
+    this.setState({ loading: true, refreshing: true });
     try {
       const username = await AsyncStorage.getItem('@githuber:username');
       const { data } = await api.get(`/users/${username}/repos`);
@@ -24,19 +30,21 @@ class Repositories extends Component {
     } catch (error) {
       Alert.alert('Não foi possível buscar seus repositórios');
     } finally {
-      this.setState({ loading: false });
+      this.setState({ loading: false, refreshing: false });
     }
-  }
+  };
 
   renderListItem = ({ item }) => <RepositoryItem repository={item} />;
 
   renderList = () => {
-    const { data } = this.state;
+    const { data, refreshing } = this.state;
     return (
       <FlatList
         data={data}
         keyExtractor={item => String(item.id)}
         renderItem={this.renderListItem}
+        onRefresh={this.loadRepositories}
+        refreshing={refreshing}
       />
     );
   };
