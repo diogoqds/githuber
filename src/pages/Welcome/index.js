@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-
+import PropTypes from 'prop-types';
 import styles from './styles';
 import api from '~/services/api';
 import { colors } from '~/styles';
@@ -35,7 +35,6 @@ class Welcome extends Component {
 
   signIn = async () => {
     const { username } = this.state;
-    // eslint-disable-next-line react/prop-types
     const { navigation } = this.props;
     this.setState({ loading: true, error: null });
     try {
@@ -83,4 +82,9 @@ class Welcome extends Component {
   }
 }
 
+Welcome.protoTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};
 export default Welcome;

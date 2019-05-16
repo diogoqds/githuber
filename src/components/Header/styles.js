@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     color: colors.darker,
   },
   left: {},
+  icon: {},
 });
 
 export default styles;
