@@ -14,7 +14,7 @@ class Repositories extends Component {
   state = {
     data: [],
     loading: true,
-    refreshing: false
+    refreshing: false,
   };
 
   componentDidMount() {
