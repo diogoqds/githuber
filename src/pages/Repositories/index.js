@@ -1,17 +1,57 @@
-import React from 'react';
-
-import { View } from 'react-native';
+import React, { Component } from 'react';
+import {
+  View, Alert, ActivityIndicator, FlatList,
+} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import PropTypes from 'prop-types';
 import Header from '~/components/Header';
-// import { Container } from './styles';
+import api from '~/services/api';
+import styles from './styles';
+import RepositoryItem from './RepositoryItem';
 
-const Repositories = () => (
-  <View>
-    <Header title="Repositórios" />
-  </View>
-);
+class Repositories extends Component {
+  state = {
+    data: [],
+    loading: true,
+  };
 
+  async componentDidMount() {
+    try {
+      const username = await AsyncStorage.getItem('@githuber:username');
+      const { data } = await api.get(`/users/${username}/repos`);
+      this.setState({ data });
+    } catch (error) {
+      Alert.alert('Não foi possível buscar seus repositórios');
+    } finally {
+      this.setState({ loading: false });
+    }
+  }
+
+  renderListItem = ({ item }) => <RepositoryItem repository={item} />;
+
+  renderList = () => {
+    const { data } = this.state;
+    return (
+      <FlatList
+        data={data}
+        keyExtractor={item => String(item.id)}
+        renderItem={this.renderListItem}
+      />
+    );
+  };
+
+  render() {
+    const { loading } = this.state;
+
+    return (
+      <View style={styles.container}>
+        <Header title="Repositórios" />
+        {loading ? <ActivityIndicator size="large" style={styles.loading} /> : this.renderList()}
+      </View>
+    );
+  }
+}
 const TabIcon = ({ tintColor }) => <Icon name="list-alt" size={20} color={tintColor} />;
 
 TabIcon.propTypes = {

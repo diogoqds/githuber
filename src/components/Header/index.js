@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withNavigation } from 'react-navigation';
 import {
-  View, Text, TouchableOpacity, StatusBar,
+  View, Text, TouchableOpacity, StatusBar, Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -15,7 +15,7 @@ class Header extends Component {
       await AsyncStorage.clear();
       navigation.navigate('Welcome');
     } catch (error) {
-      console.tron.log('Erro');
+      Alert.alert('Erro');
     }
   };
 

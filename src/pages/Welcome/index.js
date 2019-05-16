@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StatusBar,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import PropTypes from 'prop-types';
@@ -29,7 +30,7 @@ class Welcome extends Component {
     try {
       await AsyncStorage.setItem('@githuber:username', username);
     } catch (error) {
-      console.tron.log('Não foi possivel salvar');
+      Alert.alert('Não foi possivel salvar');
     }
   };
 

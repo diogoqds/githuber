@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Alert } from 'react-native';
 import '~/config/ReactotronConfig';
 import AsyncStorage from '@react-native-community/async-storage';
 import createNavigator from '~/routes';
@@ -14,7 +15,7 @@ class App extends Component {
       const username = await AsyncStorage.getItem('@githuber:username');
       this.setState({ userChecked: true, userLogged: !!username });
     } catch (error) {
-      console.tron.log('não foi possivel fazer a busca');
+      Alert.alert('não foi possivel fazer a busca');
     }
   }
 
