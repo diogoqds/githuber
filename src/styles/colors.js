@@ -8,9 +8,9 @@ export default {
   black: '#000',
 
   // primary: '#7a91ca',
-  primary: '#7159c1',
+  primary: 'red',
   // secondary: '#444a5a',
-  secondary: '#332563',
+  secondary: 'yellow',
   sucess: '#9dca83',
   danger: '#e37a7a',
 
